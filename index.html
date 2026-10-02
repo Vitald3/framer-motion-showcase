@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>37 Monogram — Logo Motion Identity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #08090C;
+      --bg-surface: #101218;
+      --bg-surface-elevated: #161822;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-focus: rgba(255, 255, 255, 0.22);
+      --text-primary: #F0F2F5;
+      --text-secondary: #8E93A4;
+      --text-tertiary: #525666;
+      --accent-cyan: #38BDF8;
+      --accent-emerald: #10B981;
+      --accent-violet: #818CF8;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient lighting */
+    .ambient-glow {
+      position: fixed;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.05) 0%, rgba(129, 140, 248, 0.02) 40%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(8, 9, 12, 0.7);
+      backdrop-filter: blur(20px);
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .meta-specs {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .indicator-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    /* Main Grid Layout */
+    main {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px 40px 60px;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+    }
+
+    /* Left Stage */
+    .stage-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .viewport-card {
+      position: relative;
+      background: #000000;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
+      aspect-ratio: 1 / 1;
+      max-height: 640px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .viewport-card.bg-dark {
+      background-color: #08090C;
+      background-image: radial-gradient(circle at 50% 50%, #151824 0%, #08090C 85%);
+    }
+
+    .viewport-card.bg-black {
+      background-color: #000000;
+      background-image: none;
+    }
+
+    .viewport-card.bg-grid {
+      background-color: #090B10;
+      background-image: 
+        linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-position: center center;
+    }
+
+    .viewport-card.bg-light {
+      background-color: #F5F5F7;
+      background-image: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #EAEAEF 85%);
+    }
+
+    .viewport-card.bg-light svg .logo-element rect,
+    .viewport-card.bg-light svg .logo-element path {
+      fill: #111216 !important;
+    }
+
+    .viewport-card.bg-light svg #sheen_linear stop {
+      stop-color: #000000 !important;
+    }
+
+    #stage_svg_wrapper {
+      width: 80%;
+      height: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #stage_svg_wrapper svg {
+      width: 100%;
+      height: 100%;
+      max-width: 540px;
+      max-height: 540px;
+      overflow: visible;
+    }
+
+    /* Player Controls Bar */
+    .controls-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .timeline-scrubber-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .scrubber-track-container {
+      flex: 1;
+      position: relative;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .scrubber-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .scrubber-progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), #60A5FA);
+      border-radius: 3px;
+      transition: width 0.05s linear;
+    }
+
+    .scrubber-thumb {
+      position: absolute;
+      top: 50%;
+      left: 0%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+      pointer-events: none;
+      transition: left 0.05s linear;
+    }
+
+    .time-readout {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      min-width: 95px;
+      text-align: right;
+    }
+
+    .buttons-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .playback-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-focus);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent-cyan);
+      color: #FFFFFF;
+    }
+
+    .btn-icon {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .segmented-control {
+      display: inline-flex;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      gap: 2px;
+    }
+
+    .seg-item {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border: none;
+      background: none;
+    }
+
+    .seg-item.active {
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Right Sidebar Controls & Data */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sidebar-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* Choreography Variant Selector Cards */
+    .variant-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .variant-card {
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface-elevated);
+      border-radius: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .variant-card:hover {
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .variant-card.selected {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .variant-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .variant-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .variant-pill {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+    }
+
+    .variant-card.selected .variant-pill {
+      background: var(--accent-cyan);
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .variant-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* Dedicated clean presentation mode (?logo) */
+    body.logo-only-mode {
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    body.logo-only-mode header,
+    body.logo-only-mode .ambient-glow,
+    body.logo-only-mode .controls-panel,
+    body.logo-only-mode .sidebar,
+    body.logo-only-mode .keyboard-hints {
+      display: none !important;
+    }
+
+    body.logo-only-mode main {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    body.logo-only-mode .stage-container {
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body.logo-only-mode .viewport-card {
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      max-height: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    body.logo-only-mode #stage_svg_wrapper {
+      width: 80vmin;
+      height: 80vmin;
+    }
+
+    .exit-logo-mode {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(16, 18, 24, 0.85);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    body.logo-only-mode .exit-logo-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .exit-logo-mode:hover {
+      color: var(--text-primary);
+      border-color: var(--border-focus);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Telemetry Timeline Phases */
+    .phase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phase-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.2);
+      font-size: 12px;
+      transition: background 0.15s ease;
+    }
+
+    .phase-item.active {
+      background: rgba(56, 189, 248, 0.12);
+      border-left: 2px solid var(--accent-cyan);
+    }
+
+    .phase-label {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .phase-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    /* Downloads List */
+    .download-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .download-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.15s ease;
+    }
+
+    .download-link:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateX(2px);
+    }
+
+    .dl-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dl-name {
+      font-weight: 600;
+    }
+
+    .dl-spec {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-tertiary);
+    }
+
+    .dl-icon {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* Keyboard hints */
+    .keyboard-hints {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      font-family: var(--font-mono);
+      margin-top: 8px;
+    }
+
+    kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+  <a href="?" id="exit_logo_btn" class="exit-logo-mode" title="Return to Showcase (Esc)"><span>Showcase</span> ✕</a>
+
+  <header>
+    <div class="brand-title">
+      <h1>37 MONOGRAM</h1>
+      <span class="logo-badge">Motion Identity System</span>
+    </div>
+    <div class="meta-specs">
+      <div class="meta-item">
+        <span class="indicator-dot"></span>
+        <span>60.0 FPS Master Engine</span>
+      </div>
+      <div class="meta-item">
+        <span>Vector 1:1 Precision</span>
+      </div>
+      <div class="meta-item">
+        <span>1.60s Total Runtime</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left: Stage & Player Controls -->
+    <div class="stage-container">
+      <div class="viewport-card bg-dark" id="viewport_card">
+        <div id="stage_svg_wrapper"></div>
+      </div>
+
+      <div class="controls-panel">
+        <!-- Scrubber -->
+        <div class="timeline-scrubber-row">
+          <div class="scrubber-track-container" id="scrubber_container">
+            <div class="scrubber-track">
+              <div class="scrubber-progress" id="scrubber_progress"></div>
+            </div>
+            <div class="scrubber-thumb" id="scrubber_thumb"></div>
+          </div>
+          <div class="time-readout" id="time_readout">0.00s / 1.60s</div>
+        </div>
+
+        <!-- Buttons & Selectors -->
+        <div class="buttons-row">
+          <div class="playback-group">
+            <button class="btn" id="btn_play_pause">
+              <svg class="btn-icon" viewBox="0 0 24 24" id="play_icon"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+              <span id="play_label">Play</span>
+            </button>
+            <button class="btn" id="btn_replay" title="Replay (R)">
+              <svg class="btn-icon" viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+              <span>Replay</span>
+            </button>
+            <button class="btn" id="btn_loop">
+              <span>Loop: ON</span>
+            </button>
+          </div>
+
+          <!-- Speed Controls -->
+          <div class="segmented-control">
+            <button class="seg-item" data-speed="0.25">0.25x</button>
+            <button class="seg-item" data-speed="0.5">0.5x</button>
+            <button class="seg-item active" data-speed="1.0">1.0x</button>
+          </div>
+
+          <!-- Background Controls -->
+          <div class="segmented-control">
+            <button class="seg-item active" data-bg="bg-dark">Dark</button>
+            <button class="seg-item" data-bg="bg-black">OLED</button>
+            <button class="seg-item" data-bg="bg-grid">Grid</button>
+            <button class="seg-item" data-bg="bg-light">Light</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="keyboard-hints">
+        <span><kbd>Space</kbd> Play / Pause</span>
+        <span><kbd>R</kbd> Replay</span>
+        <span><kbd>←</kbd> <kbd>→</kbd> Scrub ±0.05s</span>
+      </div>
+    </div>
+
+    <!-- Right: Variants, Phases & Exports -->
+    <div class="sidebar">
+      <!-- Choreography Selection -->
+      <div class="sidebar-section">
+        <div class="section-header">
+          <span class="section-title">Motion Choreography</span>
+        </div>
+        <div class="variant-cards">
+          <!-- Signature Variant -->
+          <div class="variant-card selected" data-variant="signature">
+            <div class="variant-card-top">
+              <span class="variant-name">Signature</span>
+              <span class="variant-pill">Default</span>
+            </div>
+            <p class="variant-desc">Kinetic assembly along 45° vectors, directional luminous reveals, 45° specular sheen sweep, and locked 1:1 geometry.</p>
+          </div>
+
+          <!-- Minimal Variant -->
+          <div class="variant-card" data-variant="minimal">
+            <div class="variant-card-top">
+              <span class="variant-name">Minimal</span>
+              <span class="variant-pill">Direct</span>
+            </div>
+            <p class="variant-desc">Direct in-place mask reveal along native geometry vectors with zero spatial displacement.</p>
+          </div>
+
+          <!-- Blueprint Variant -->
+          <div class="variant-card" data-variant="blueprint">
+            <div class="variant-card-top">
+              <span class="variant-name">Blueprint</span>
+              <span class="variant-pill">Technical</span>
+            </div>
+            <p class="variant-desc">Technical construction guide overlay showing 45° vectors, alignment axes, and circular radii.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Phases -->
+      <div class="sidebar-section">
+        <div class="section-header">
+          <span class="section-title">Timeline Phases</span>
+        </div>
+        <div class="phase-list">
+          <div class="phase-item" id="phase_1">
+            <span class="phase-label">01. Initiation & Kinetic Drift</span>
+            <span class="phase-time">0–150 ms</span>
+          </div>
+          <div class="phase-item" id="phase_2">
+            <span class="phase-label">02. Directional Path Tracing</span>
+            <span class="phase-time">150–850 ms</span>
+          </div>
+          <div class="phase-item" id="phase_3">
+            <span class="phase-label">03. Anchor Convergence & Lock</span>
+            <span class="phase-time">850–1250 ms</span>
+          </div>
+          <div class="phase-item" id="phase_4">
+            <span class="phase-label">04. Specular Sheen & Settle</span>
+            <span class="phase-time">1250–1550 ms</span>
+          </div>
+          <div class="phase-item" id="phase_5">
+            <span class="phase-label">05. 1:1 Static State Locked</span>
+            <span class="phase-time">1550 ms+</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Master Deliverables -->
+      <div class="sidebar-section">
+        <div class="section-header">
+          <span class="section-title">Production Deliverables</span>
+        </div>
+        <div class="download-grid">
+          <a class="download-link" href="exports/logo_animation_4k.mp4" download>
+            <div class="dl-info">
+              <span class="dl-name">Master 4K Video</span>
+              <span class="dl-spec">2160×2160 · 60fps · MP4 H.264</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+          <a class="download-link" href="exports/logo_animation_1080p.mp4" download>
+            <div class="dl-info">
+              <span class="dl-name">Master 1080p Video</span>
+              <span class="dl-spec">1080×1080 · 60fps · MP4 H.264</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+          <a class="download-link" href="exports/logo_animation_transparent.webm" download>
+            <div class="dl-info">
+              <span class="dl-name">Transparent Web Video</span>
+              <span class="dl-spec">1080×1080 · 60fps · WebM VP9 Alpha</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+          <a class="download-link" href="exports/logo_animation_transparent.mov" download>
+            <div class="dl-info">
+              <span class="dl-name">ProRes 4444 Alpha</span>
+              <span class="dl-spec">1080×1080 · 60fps · Apple ProRes Alpha</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+          <a class="download-link" href="exports/logo_animation.json" download>
+            <div class="dl-info">
+              <span class="dl-name">Lottie Vector JSON</span>
+              <span class="dl-spec">113 KB · Mobile/Web Bodymovin</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+          <a class="download-link" href="exports/logo_animated.svg" download>
+            <div class="dl-info">
+              <span class="dl-name">Standalone Animated SVG</span>
+              <span class="dl-spec">20 KB · SMIL Native Vector (No JS)</span>
+            </div>
+            <span class="dl-icon">↓</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Local Offline GSAP Engine -->
+  <script src="preview/vendor/gsap.min.js"></script>
+  <script src="preview/vendor/CustomEase.min.js"></script>
+  <script>
+    // Master Vector Data (Exact 1:1 geometric definition from sources/Logo.svg)
+    const ORIGINAL_SVG_DATA = {
+      viewBox: "0 0 497 539",
+      width: 497,
+      height: 539,
+      elements: [
+        { id: "p00_three_top_outer", type: "rect", x: 106.559, y: 0, width: 210.079, height: 25, group: "three", motion: "horiz_r", length: 240, startX: 106.559, startY: 0 },
+        { id: "p01_three_diag_outer", type: "path", d: "M106.126 240.019H70.7705L310.788 0.000488281H346.144L106.126 240.019Z", group: "three", motion: "diag_down_left", length: 390, originX: 346.144, originY: 0, angle: 135 },
+        { id: "p02_three_top_inner", type: "rect", x: 66.041, y: 50, width: 127.954, height: 25, group: "three", motion: "horiz_r", length: 160, startX: 66.041, startY: 50 },
+        { id: "p03_three_diag_inner", type: "path", d: "M35.4111 240.019H0.0556641L190.074 50H225.43L35.4111 240.019Z", group: "three", motion: "diag_down_left", length: 320, originX: 225.43, originY: 50, angle: 135 },
+        { id: "p04_seven_top_inner", type: "rect", x: 270.154, y: 154.756, width: 150.859, height: 25, group: "seven", motion: "horiz_r", length: 180, startX: 270.154, startY: 154.756 },
+        { id: "p05_seven_bottom_cap", type: "rect", x: 105.222, y: 513.249, width: 70.374, height: 25, group: "seven", motion: "horiz_r", length: 100, startX: 105.222, startY: 513.249 },
+        { id: "p06_three_arc_outer", type: "path", d: "M276.196 154.757C303.44 183.486 320.154 222.3 320.154 265.019L320.142 267.09C319.032 354.65 247.707 425.289 159.884 425.289L157.812 425.276C74.0027 424.215 5.69938 358.824 0 276.211H25.0713C30.7618 345.682 88.9448 400.289 159.884 400.289C234.591 400.289 295.154 339.726 295.154 265.019C295.154 219.526 272.697 179.278 238.264 154.757H276.196Z", group: "three", motion: "arc" },
+        { id: "p07_three_arc_inner", type: "path", d: "M161.317 154.765C221.556 155.528 270.154 204.598 270.154 265.018L270.146 266.442C269.383 326.681 220.313 375.279 159.893 375.279L158.468 375.271C102.17 374.557 56.0408 331.651 50.2461 276.72H75.4287C81.1321 318.271 116.774 350.279 159.893 350.279C206.981 350.279 245.154 312.106 245.154 265.018C245.154 218.137 207.318 180.095 160.516 179.76V154.759L161.317 154.765Z", group: "three", motion: "arc" },
+        { id: "p08_three_chamfer", type: "path", d: "M66.3477 75H31.0742L31.0332 74.959L105.992 0H141.348L66.3477 75Z", group: "three", motion: "diag_down_left", length: 180, originX: 141.348, originY: 0, angle: 145.7 },
+        { id: "p09_seven_top_outer", type: "path", d: "M476.826 129.755H251.776L276.776 104.755H476.826V129.755Z", group: "seven", motion: "horiz_r", length: 260, startX: 251.776, startY: 104.755 },
+        { id: "p10_seven_diag_outer", type: "path", d: "M496.014 208.072V226.251L184.016 538.249H148.66L487.426 199.484L496.014 208.072Z", group: "seven", motion: "diag_down_left", length: 560, originX: 496.014, originY: 208.072, angle: 135 },
+        { id: "p11_three_mid_conn", type: "rect", x: 26.7178, y: 215.019, width: 78.6479, height: 25, group: "three", motion: "horiz_l", length: 110, startX: 105.3657, startY: 215.019 },
+        { id: "p12_seven_vert_outer", type: "rect", x: 471.014, y: 225.628, width: 120.873, height: 25, transform: "rotate(-90 471.014 225.628)", group: "seven", motion: "vert_down", length: 150, startX: 471.014, startY: 104.755 },
+        { id: "p13_seven_vert_inner", type: "rect", x: 421.014, y: 204.837, width: 50.0806, height: 25, transform: "rotate(-90 421.014 204.837)", group: "seven", motion: "vert_down", length: 80, startX: 421.014, startY: 154.756 },
+        { id: "p14_three_bottom_cap", type: "rect", x: 5.31738, y: 276.211, width: 70.1117, height: 25, group: "three", motion: "horiz_r", length: 100, startX: 5.31738, startY: 276.211 },
+        { id: "p15_seven_diag_inner", type: "path", d: "M446.014 184.439V205.554L113.317 538.25H77.9629L438.894 177.319L446.014 184.439Z", group: "seven", motion: "diag_down_left", length: 580, originX: 446.014, originY: 184.439, angle: 135 }
+      ]
+    };
+
+    function normalizeVariant(val) {
+      if (!val) return "signature";
+      const s = String(val).toLowerCase();
+      if (s === "a" || s === "minimal") return "minimal";
+      if (s === "c" || s === "blueprint") return "blueprint";
+      return "signature";
+    }
+
+    function generateStageSVG(variant = "signature") {
+      const v = normalizeVariant(variant);
+      const isMinimal = v === "minimal";
+      const isBlueprint = v === "blueprint";
+      const isSignature = v === "signature";
+      const artboardWidth = 800;
+      const artboardHeight = 800;
+      const dx = (artboardWidth - 497) / 2;
+      const dy = (artboardHeight - 539) / 2;
+
+      let defs = `
+      <defs>
+        <linearGradient id="linear_reveal_grad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+          <stop offset="68%" stop-color="#ffffff" stop-opacity="1"/>
+          <stop offset="88%" stop-color="#ffffff" stop-opacity="0.85"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+
+        <linearGradient id="sheen_linear" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+          <stop offset="35%" stop-color="#ffffff" stop-opacity="0.12"/>
+          <stop offset="50%" stop-color="#ffffff" stop-opacity="0.95"/>
+          <stop offset="65%" stop-color="#ffffff" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+`;
+
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        const maskId = `mask_${el.id}`;
+        if (el.motion === "diag_down_left") {
+          defs += `        <mask id="${maskId}"><g transform="translate(${el.originX}, ${el.originY}) rotate(${el.angle})"><rect id="rect_${el.id}" x="0" y="-100" width="0" height="200" fill="url(#linear_reveal_grad)"/></g></mask>\n`;
+        } else if (el.motion === "horiz_r") {
+          defs += `        <mask id="${maskId}"><g transform="translate(${el.startX}, ${el.startY})"><rect id="rect_${el.id}" x="0" y="-30" width="0" height="85" fill="url(#linear_reveal_grad)"/></g></mask>\n`;
+        } else if (el.motion === "horiz_l") {
+          defs += `        <mask id="${maskId}"><g transform="translate(${el.startX}, ${el.startY}) rotate(180)"><rect id="rect_${el.id}" x="0" y="-45" width="0" height="85" fill="url(#linear_reveal_grad)"/></g></mask>\n`;
+        } else if (el.motion === "vert_down") {
+          defs += `        <mask id="${maskId}"><g transform="translate(${el.startX}, ${el.startY}) rotate(90)"><rect id="rect_${el.id}" x="0" y="-30" width="0" height="90" fill="url(#linear_reveal_grad)"/></g></mask>\n`;
+        }
+      });
+
+      defs += `        <mask id="mask_three_arcs">
+          <circle id="circle_three_arcs" cx="159.884" cy="265.019" r="125" fill="none"
+                  stroke="white" stroke-width="125" stroke-linecap="butt"
+                  stroke-dasharray="720 720" stroke-dashoffset="720"
+                  transform="rotate(-95 159.884 265.019)"/>
+        </mask>
+
+        <mask id="full_monogram_mask">
+          <g id="mask_monogram_shapes">
+`;
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        if (el.type === "rect") {
+          const tr = el.transform ? ` transform="${el.transform}"` : "";
+          defs += `            <rect x="${el.x}" y="${el.y || 0}" width="${el.width}" height="${el.height}"${tr} fill="white"/>\n`;
+        } else {
+          defs += `            <path d="${el.d}" fill="white"/>\n`;
+        }
+      });
+      defs += `          </g>
+        </mask>
+      </defs>\n`;
+
+      let body = `      <g id="blueprint_guides" style="opacity: 0; pointer-events: none;" transform="translate(${dx}, ${dy})">
+        <line x1="-120" y1="-120" x2="620" y2="620" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="4 6" opacity="0.4"/>
+        <line x1="346" y1="0" x2="-60" y2="406" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="4 6" opacity="0.4"/>
+        <line x1="496" y1="208" x2="148" y2="556" stroke="#38bdf8" stroke-width="0.85" stroke-dasharray="4 6" opacity="0.4"/>
+        <circle cx="159.884" cy="265.019" r="160.27" fill="none" stroke="#38bdf8" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.3"/>
+        <circle cx="159.884" cy="265.019" r="110.26" fill="none" stroke="#38bdf8" stroke-width="0.75" stroke-dasharray="3 5" opacity="0.3"/>
+        <circle cx="159.884" cy="265.019" r="3" fill="#38bdf8" opacity="0.6"/>
+      </g>
+      <g id="master_container" transform="translate(${dx}, ${dy})">\n`;
+
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        const maskAttr = (el.motion === "arc") ? `mask="url(#mask_three_arcs)"` : `mask="url(#mask_${el.id})"`;
+        body += `        <g id="group_${el.id}" class="logo-element ${el.group}-element" ${maskAttr}>\n`;
+        if (el.type === "rect") {
+          const tr = el.transform ? ` transform="${el.transform}"` : "";
+          body += `          <rect id="raw_${el.id}" x="${el.x}" y="${el.y || 0}" width="${el.width}" height="${el.height}"${tr} fill="white"/>\n`;
+        } else {
+          body += `          <path id="raw_${el.id}" d="${el.d}" fill="white"/>\n`;
+        }
+        body += `        </g>\n`;
+      });
+
+      body += `        <g id="sheen_layer" mask="url(#full_monogram_mask)" style="opacity: 0; pointer-events: none;">
+          <rect id="sheen_band" x="-300" y="-300" width="380" height="1300" fill="url(#sheen_linear)" transform="rotate(45 250 270)"/>
+        </g>
+      </g>\n`;
+
+      return `<svg id="logo_svg" width="100%" height="100%" viewBox="0 0 ${artboardWidth} ${artboardHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+${defs}${body}</svg>`;
+    }
+
+    // Motion Controller
+    let currentTimeline = null;
+    let activeVariant = "signature";
+    let playbackSpeed = 1.0;
+    let isLooping = true;
+    let isScrubbing = false;
+
+    function buildTimeline(variant = "signature") {
+      if (currentTimeline) {
+        currentTimeline.kill();
+      }
+
+      const v = normalizeVariant(variant);
+      const isMinimal = v === "minimal";
+      const isBlueprint = v === "blueprint";
+      const isSignature = v === "signature";
+
+      document.getElementById('stage_svg_wrapper').innerHTML = generateStageSVG(v);
+
+      gsap.registerPlugin(CustomEase);
+      const revealEase = CustomEase.create("revealEase", "0.22, 1, 0.36, 1");
+      const slideEase = CustomEase.create("slideEase", "0.16, 1, 0.3, 1");
+      const arcEase = CustomEase.create("arcEase", "0.25, 1, 0.45, 1");
+      const sheenEase = CustomEase.create("sheenEase", "0.38, 0.0, 0.22, 1");
+
+      const tl = gsap.timeline({
+        paused: true,
+        onUpdate: updateUIProgress,
+        onComplete: () => {
+          if (isLooping) {
+            gsap.delayedCall(0.5, () => {
+              if (isLooping && !isScrubbing) {
+                tl.restart();
+              }
+            });
+          } else {
+            updatePlayButton(false);
+          }
+        }
+      });
+
+      // Reset masks
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        const rect = document.querySelector("#rect_" + el.id);
+        if (rect) {
+          rect.setAttribute("width", "0");
+          rect.setAttribute("fill", "url(#linear_reveal_grad)");
+        }
+      });
+      const circleArc = document.querySelector("#circle_three_arcs");
+      if (circleArc) circleArc.setAttribute("stroke-dashoffset", "720");
+
+      // Initial offsets
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        const grp = document.querySelector("#group_" + el.id);
+        if (!grp) return;
+
+        let initX = 0, initY = 0;
+        if (!isMinimal) {
+          if (el.group === "seven") {
+            if (el.motion === "diag_down_left") { initX = 14; initY = -14; }
+            else if (el.motion === "vert_down") { initX = 0; initY = -12; }
+            else if (el.motion === "horiz_r") { initX = -12; initY = 0; }
+          } else {
+            if (el.motion === "diag_down_left") { initX = 9; initY = -9; }
+            else if (el.motion === "horiz_r" || el.motion === "horiz_l") { initX = -10; initY = 0; }
+            else if (el.motion === "arc") {
+              initX = 0; initY = 0;
+              gsap.set(grp, { scale: 0.985, transformOrigin: "159.884px 265.019px" });
+            }
+          }
+        }
+        gsap.set(grp, { x: initX, y: initY });
+
+        const rawShape = document.querySelector("#raw_" + el.id);
+        if (rawShape && isSignature) {
+          rawShape.setAttribute("fill", "#d4d8e6");
+        } else if (rawShape) {
+          rawShape.setAttribute("fill", "#ffffff");
+        }
+      });
+
+      // Blueprint Guides
+      const blueprintGuides = document.querySelector("#blueprint_guides");
+      if (blueprintGuides) {
+        if (isBlueprint) {
+          tl.fromTo(blueprintGuides, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.in" }, 0.05);
+          tl.to(blueprintGuides, { opacity: 0, duration: 0.40, ease: "power2.out" }, 1.10);
+        } else {
+          gsap.set(blueprintGuides, { opacity: 0 });
+        }
+      }
+
+      // Directional Path Reveals
+      tl.to("#rect_p10_seven_diag_outer", { attr: { width: 560 }, duration: 0.68, ease: revealEase }, 0.12);
+      tl.to("#rect_p15_seven_diag_inner", { attr: { width: 580 }, duration: 0.68, ease: revealEase }, 0.15);
+      tl.to("#rect_p01_three_diag_outer", { attr: { width: 390 }, duration: 0.64, ease: revealEase }, 0.16);
+      tl.to("#rect_p03_three_diag_inner", { attr: { width: 320 }, duration: 0.64, ease: revealEase }, 0.19);
+      tl.to("#circle_three_arcs", { attr: { "stroke-dashoffset": 0 }, duration: 0.74, ease: arcEase }, 0.22);
+      tl.to("#rect_p09_seven_top_outer", { attr: { width: 260 }, duration: 0.52, ease: revealEase }, 0.28);
+      tl.to("#rect_p04_seven_top_inner", { attr: { width: 180 }, duration: 0.50, ease: revealEase }, 0.31);
+      tl.to("#rect_p12_seven_vert_outer", { attr: { width: 150 }, duration: 0.48, ease: revealEase }, 0.36);
+      tl.to("#rect_p13_seven_vert_inner", { attr: { width: 80 }, duration: 0.44, ease: revealEase }, 0.39);
+      tl.to("#rect_p00_three_top_outer", { attr: { width: 240 }, duration: 0.52, ease: revealEase }, 0.30);
+      tl.to("#rect_p02_three_top_inner", { attr: { width: 160 }, duration: 0.48, ease: revealEase }, 0.34);
+      tl.to("#rect_p08_three_chamfer", { attr: { width: 180 }, duration: 0.46, ease: revealEase }, 0.36);
+      tl.to("#rect_p11_three_mid_conn", { attr: { width: 110 }, duration: 0.42, ease: revealEase }, 0.40);
+      tl.to("#rect_p14_three_bottom_cap", { attr: { width: 100 }, duration: 0.44, ease: revealEase }, 0.46);
+      tl.to("#rect_p05_seven_bottom_cap", { attr: { width: 100 }, duration: 0.42, ease: revealEase }, 0.50);
+
+      // Solidify Masks
+      ORIGINAL_SVG_DATA.elements.forEach(el => {
+        if (el.motion === "arc") return;
+        tl.to("#rect_" + el.id, { attr: { fill: "#ffffff" }, duration: 0.16, ease: "power2.out" }, 0.94);
+      });
+
+      // Spatial Convergence
+      if (!isMinimal) {
+        ORIGINAL_SVG_DATA.elements.forEach(el => {
+          tl.to("#group_" + el.id, { x: 0, y: 0, scale: 1, duration: 0.86, ease: slideEase }, 0.22);
+        });
+      }
+
+      // Specular Sheen
+      const sheenLayer = document.querySelector("#sheen_layer");
+      const sheenBand = document.querySelector("#sheen_band");
+      if (!isMinimal && sheenLayer && sheenBand) {
+        tl.fromTo(sheenLayer, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power1.in" }, 1.10);
+        tl.fromTo(sheenBand, { attr: { y: -500 } }, { attr: { y: 400 }, duration: 0.44, ease: sheenEase }, 1.10);
+        tl.to(sheenLayer, { opacity: 0, duration: 0.14, ease: "power1.out" }, 1.38);
+
+        ORIGINAL_SVG_DATA.elements.forEach(el => {
+          tl.to("#raw_" + el.id, { attr: { fill: "#ffffff" }, duration: 0.25, ease: "power1.inOut" }, 1.15);
+        });
+      }
+
+      // Micro settle
+      tl.fromTo("#master_container", { filter: "brightness(1.03)" }, { filter: "brightness(1.0)", duration: 0.28, ease: "power2.out" }, 1.46);
+
+      tl.timeScale(playbackSpeed);
+      currentTimeline = tl;
+      tl.play(0);
+      updatePlayButton(true);
+    }
+
+    // UI Updates
+    const scrubberProgress = document.getElementById("scrubber_progress");
+    const scrubberThumb = document.getElementById("scrubber_thumb");
+    const timeReadout = document.getElementById("time_readout");
+    const btnPlayPause = document.getElementById("btn_play_pause");
+    const playIcon = document.getElementById("play_icon");
+    const playLabel = document.getElementById("play_label");
+
+    function updateUIProgress() {
+      if (!currentTimeline) return;
+      const progress = currentTimeline.progress();
+      const time = currentTimeline.time();
+      const total = currentTimeline.duration();
+
+      scrubberProgress.style.width = (progress * 100) + "%";
+      scrubberThumb.style.left = (progress * 100) + "%";
+      timeReadout.textContent = `${time.toFixed(2)}s / ${total.toFixed(2)}s`;
+
+      // Update Phase highlight
+      const p = time;
+      document.querySelectorAll(".phase-item").forEach(item => item.classList.remove("active"));
+      if (p < 0.15) {
+        document.getElementById("phase_1")?.classList.add("active");
+      } else if (p < 0.85) {
+        document.getElementById("phase_2")?.classList.add("active");
+      } else if (p < 1.25) {
+        document.getElementById("phase_3")?.classList.add("active");
+      } else if (p < 1.55) {
+        document.getElementById("phase_4")?.classList.add("active");
+      } else {
+        document.getElementById("phase_5")?.classList.add("active");
+      }
+    }
+
+    function updatePlayButton(isPlaying) {
+      if (isPlaying) {
+        playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+        playLabel.textContent = "Pause";
+      } else {
+        playIcon.innerHTML = '<polygon points="6 4 20 12 6 20 6 4"/>';
+        playLabel.textContent = "Play";
+      }
+    }
+
+    btnPlayPause.addEventListener("click", () => {
+      if (!currentTimeline) return;
+      if (currentTimeline.isActive()) {
+        currentTimeline.pause();
+        updatePlayButton(false);
+      } else {
+        if (currentTimeline.progress() >= 1) currentTimeline.restart();
+        else currentTimeline.play();
+        updatePlayButton(true);
+      }
+    });
+
+    document.getElementById("btn_replay").addEventListener("click", () => {
+      if (currentTimeline) {
+        currentTimeline.restart();
+        updatePlayButton(true);
+      }
+    });
+
+    const btnLoop = document.getElementById("btn_loop");
+    btnLoop.addEventListener("click", () => {
+      isLooping = !isLooping;
+      btnLoop.classList.toggle("active", isLooping);
+      btnLoop.querySelector("span").textContent = isLooping ? "Loop: ON" : "Loop: OFF";
+    });
+    btnLoop.classList.add("active");
+
+    // Scrubber interaction
+    const scrubberContainer = document.getElementById("scrubber_container");
+    function seekToEvent(e) {
+      const rect = scrubberContainer.getBoundingClientRect();
+      const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (currentTimeline) {
+        currentTimeline.progress(pos);
+        updateUIProgress();
+      }
+    }
+
+    scrubberContainer.addEventListener("mousedown", (e) => {
+      isScrubbing = true;
+      if (currentTimeline) currentTimeline.pause();
+      updatePlayButton(false);
+      seekToEvent(e);
+      window.addEventListener("mousemove", seekToEvent);
+      window.addEventListener("mouseup", () => {
+        isScrubbing = false;
+        window.removeEventListener("mousemove", seekToEvent);
+      }, { once: true });
+    });
+
+    // Speed Controls
+    document.querySelectorAll("[data-speed]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-speed]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        playbackSpeed = parseFloat(btn.getAttribute("data-speed"));
+        if (currentTimeline) currentTimeline.timeScale(playbackSpeed);
+      });
+    });
+
+    // Background Controls
+    const viewportCard = document.getElementById("viewport_card");
+    document.querySelectorAll("[data-bg]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-bg]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        viewportCard.className = "viewport-card " + btn.getAttribute("data-bg");
+      });
+    });
+
+    // Choreography Variant Cards
+    document.querySelectorAll(".variant-card").forEach(card => {
+      card.addEventListener("click", () => {
+        document.querySelectorAll(".variant-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        activeVariant = card.getAttribute("data-variant") || "signature";
+        buildTimeline(activeVariant);
+      });
+    });
+
+    // Exit logo mode button
+    document.getElementById("exit_logo_btn")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.body.classList.remove("logo-only-mode");
+      const url = new URL(window.location);
+      url.searchParams.delete("logo");
+      window.history.replaceState({}, "", url.pathname + (url.search ? url.search : ""));
+    });
+
+    // Keyboard Shortcuts
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
+        if (document.body.classList.contains("logo-only-mode")) {
+          document.body.classList.remove("logo-only-mode");
+          const url = new URL(window.location);
+          url.searchParams.delete("logo");
+          window.history.replaceState({}, "", url.pathname + (url.search ? url.search : ""));
+          return;
+        }
+      }
+      if (e.code === "Space") {
+        e.preventDefault();
+        btnPlayPause.click();
+      } else if (e.code === "KeyR") {
+        document.getElementById("btn_replay").click();
+      } else if (e.code === "ArrowLeft") {
+        if (currentTimeline) {
+          currentTimeline.time(Math.max(0, currentTimeline.time() - 0.05));
+          updateUIProgress();
+        }
+      } else if (e.code === "ArrowRight") {
+        if (currentTimeline) {
+          currentTimeline.time(Math.min(currentTimeline.duration(), currentTimeline.time() + 0.05));
+          updateUIProgress();
+        }
+      }
+    });
+
+    // Initialize with URL parameter support (?logo, ?variant, ?bg, ?speed)
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("logo")) {
+        document.body.classList.add("logo-only-mode");
+      }
+
+      const initialVariant = normalizeVariant(urlParams.get("variant") || "signature");
+      activeVariant = initialVariant;
+      document.querySelectorAll(".variant-card").forEach(c => {
+        const v = normalizeVariant(c.getAttribute("data-variant"));
+        c.classList.toggle("selected", v === initialVariant);
+      });
+
+      const initialBg = urlParams.get("bg");
+      if (initialBg) {
+        const bgClass = initialBg.startsWith("bg-") ? initialBg : `bg-${initialBg}`;
+        if (["bg-dark", "bg-black", "bg-grid", "bg-light"].includes(bgClass)) {
+          viewportCard.className = "viewport-card " + bgClass;
+          document.querySelectorAll("[data-bg]").forEach(b => {
+            b.classList.toggle("active", b.getAttribute("data-bg") === bgClass);
+          });
+        }
+      }
+
+      const initialSpeed = parseFloat(urlParams.get("speed"));
+      if (initialSpeed && [0.25, 0.5, 1.0].includes(initialSpeed)) {
+        playbackSpeed = initialSpeed;
+        document.querySelectorAll("[data-speed]").forEach(b => {
+          b.classList.toggle("active", parseFloat(b.getAttribute("data-speed")) === initialSpeed);
+        });
+      }
+
+      buildTimeline(activeVariant);
+    });
+  </script>
+</body>
+</html>

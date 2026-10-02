@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Logs & Cache
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.npmcache/
+
+# Temporary harnesses and render captures
+temp_harness_*.html
